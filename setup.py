@@ -8,7 +8,7 @@ with open("requirements.txt", "r") as fh:
 
 setuptools.setup(
     name="pyfcomb",
-    version="1.0.0",
+    version="1.0.1",
     author="Marco Müllner",
     author_email="muellnermarco@gmail.com",
     description="Computing frequency combinations made simple",
