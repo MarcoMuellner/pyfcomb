@@ -32,7 +32,6 @@ jobs:
         run: echo "DYNAMIC_VERSION=0.4.9.dev$(date +%s)" >> $GITHUB_ENV
       - name: Set Versions in Cargo.toml and pyproject.toml
         run: |
-          sed -i "s/^version = .*/version = \"$DYNAMIC_VERSION\"/" Cargo.toml
           sed -i "s/^version = .*/version = \"$DYNAMIC_VERSION\"/" pyproject.toml
       - name: Setup Python
         uses: actions/setup-python@v4
