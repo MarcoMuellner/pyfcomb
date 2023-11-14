@@ -1,4 +1,0 @@
-FCombLibrary==1.0.9
-numpy
-pandas
-pytest
