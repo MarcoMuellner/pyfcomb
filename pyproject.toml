@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyfcomb"
-version = "2.0.0"
+version = "2.0.1"
 description = "Frequency combinations made easy! pyfcomb allows you to compute possible combinations of frequencies from a given list of frequencies."
 authors = ["Marco Müllner, <muellnermarco@gmail.com>"]
 license = "MIT"
