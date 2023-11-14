@@ -1,8 +1,8 @@
 from pandas import DataFrame as df,concat
 from typing import List, Tuple,Union
 import numpy as np
-import FCombLibrary as fc
 import re
+from .rfcomb import RFrequency, r_get_combinations
 
 regex_string = r'([+-]*)(\d*)(f\d+)'
 
@@ -132,7 +132,7 @@ def get_combinations(frequency_ids: List[int], frequencies: List[float], amplitu
     if len(frequency_ids) != len(frequencies) or len(frequencies) != len(amplitudes):
         raise ValueError("Number of frequencies, amplitudes and frequency ids must be equal")
 
-    data = [fc.FData(int(f_id), float(f), float(amp)) for f_id, f, amp in zip(frequency_ids, frequencies, amplitudes)]
+    data = [RFrequency(int(f_id), float(f), float(amp)) for f_id, f, amp in zip(frequency_ids, frequencies, amplitudes)]
 
-    result = fc.get_combinations(data, combo_depth, accuracy)
+    result = get_combinations(data, combo_depth, accuracy)
     return _parse_frequencies(result,frequency_ids,frequencies,amplitudes)

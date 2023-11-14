@@ -10,13 +10,6 @@ pub struct RFrequency {
 }
 
 impl RFrequency {
-    fn new(frequency: f64, fnum: i32, amplitude: f64) -> RFrequency {
-        RFrequency {
-            frequency: frequency,
-            frequency_number: fnum,
-            amplitude: amplitude,
-        }
-    }
 }
 
 //override equality operator
@@ -35,7 +28,6 @@ impl PartialOrd for RFrequency {
 
 struct RFrequencyCompositionComponent {
     factor: i32,
-    number: i32,
 }
 
 //Imlement equality and ordering for RFrequencyCompositionComponent
@@ -54,10 +46,6 @@ impl PartialOrd for RFrequencyCompositionComponent {
 pub struct RFrequencyComposition {
     pub component: RFrequency,
     pub composition_string: String,
-}
-
-pub struct RFrequencyArray {
-    frequencies: Vec<RFrequency>,
 }
 
 fn check_for_composition(fnum: i32, freq: f64, ampl: f64, maxdepth: i32, accuracy: f64, found_frequency_objects: &Vec<RFrequency>) -> RFrequencyComposition {
@@ -228,7 +216,7 @@ fn check_for_composition(fnum: i32, freq: f64, ampl: f64, maxdepth: i32, accurac
 }
 
 #[pyfunction]
-fn get_combinations(vec: Vec<RFrequency>, combo_depth: i32, accuracy: f64) -> (Vec<String>, Vec<String>) {
+fn r_get_combinations(vec: Vec<RFrequency>, combo_depth: i32, accuracy: f64) -> (Vec<String>, Vec<String>) {
     let mut component_strings: Vec<String> = vec![];
     let mut independent_strings: Vec<String> = vec![];
     let mut found_frequency_objects: Vec<RFrequency> = vec![];
@@ -247,9 +235,10 @@ fn get_combinations(vec: Vec<RFrequency>, combo_depth: i32, accuracy: f64) -> (V
 }
 
 #[pymodule]
+#[pyo3(name="rfcomb")]
 fn rfcomb(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_class::<RFrequency>()?;
-    m.add_function(wrap_pyfunction!(get_combinations, m)?)?;
+    m.add_function(wrap_pyfunction!(r_get_combinations, m)?)?;
     Ok(())
 }
 
