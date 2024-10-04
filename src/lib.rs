@@ -2,14 +2,26 @@ use pyo3::prelude::*;
 use std::cmp::Ordering;
 
 #[pyclass]
-#[derive(Debug,Clone)]
+#[derive(Debug, Clone)]
 pub struct RFrequency {
+    #[pyo3(get, set)]
     pub frequency_number: i32,
+    #[pyo3(get, set)]
     pub frequency: f64,
+    #[pyo3(get, set)]
     pub amplitude: f64,
 }
 
+#[pymethods]
 impl RFrequency {
+    #[new]
+    pub fn new(frequency_number: i32, frequency: f64, amplitude: f64) -> Self {
+        RFrequency {
+            frequency_number,
+            frequency,
+            amplitude,
+        }
+    }
 }
 
 //override equality operator
@@ -230,6 +242,17 @@ fn r_get_combinations(vec: Vec<RFrequency>, combo_depth: i32, accuracy: f64) -> 
             independent_strings.push(format!("f{}", data.frequency_number));
         }
     }
+
+    // Filter out solutions that exceed the combo_depth
+    component_strings = component_strings.into_iter()
+        .filter(|s| {
+            s.split(';').all(|combo| {
+                combo.split('=').nth(1).map_or(true, |rhs| {
+                    rhs.split('+').count() <= combo_depth as usize
+                })
+            })
+        })
+        .collect();
 
     (component_strings, independent_strings)
 }
